@@ -467,8 +467,11 @@ class Oci8 extends PDO
     private function connect($dsn, $username, $password, array $options, $charset)
     {
         $sessionMode = array_key_exists('session_mode', $options) ? $options['session_mode'] : null;
-
+        \Log::info('CONNECT');
         if (array_key_exists(PDO::ATTR_PERSISTENT, $options) && $options[PDO::ATTR_PERSISTENT]) {
+            \Log::info($dsn);
+            $dsn = preg_replace('/DESCRIPTION = /', 'DESCRIPTION = (CONNECT_TIMEOUT=10)', $dsn);
+            \Log::info($dsn);
             $this->dbh = @oci_pconnect($username, $password, $dsn, $charset, $sessionMode);
         } else {
             \Log::info($dsn);
