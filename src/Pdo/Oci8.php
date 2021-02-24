@@ -471,7 +471,7 @@ class Oci8 extends PDO
             $this->dbh = @oci_pconnect($username, $password, $dsn, $charset, $sessionMode);
         } else {
             \Log::info($dsn);
-            $this->dbh = @oci_connect($username, $password, $dsn . '?connect_timeout=10', $charset, $sessionMode);
+            $this->dbh = @oci_connect($username, $password, $dsn . ';Connection Timeout=10;', $charset, $sessionMode);
         }
 
         if (! $this->dbh) {
