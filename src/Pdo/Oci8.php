@@ -470,7 +470,7 @@ class Oci8 extends PDO
         if (array_key_exists(PDO::ATTR_PERSISTENT, $options) && $options[PDO::ATTR_PERSISTENT]) {
             $this->dbh = @oci_pconnect($username, $password, $dsn, $charset, $sessionMode);
         } else {
-            $this->dbh = @oci_connect($username, $password, $dsn, $charset, $sessionMode);
+            $this->dbh = @oci_connect($username, $password, $dsn . '?connect_timeout=10', $charset, $sessionMode);
         }
 
         if (! $this->dbh) {
