@@ -68,6 +68,7 @@ class Oci8 extends PDO
     public function __construct($dsn, $username, $password, array $options = [])
     {
         $dsn = (string) trim($dsn);
+        \Log::info($dns)
         if (strpos($dsn, 'oci:') === 0) {
             $connectStr = preg_replace('/^oci:/', '', $dsn);
             parse_str(str_replace(';', '&', $connectStr), $connectParams);
@@ -471,7 +472,9 @@ class Oci8 extends PDO
             $this->dbh = @oci_pconnect($username, $password, $dsn, $charset, $sessionMode);
         } else {
             \Log::info($dsn);
-            $this->dbh = @oci_connect($username, $password, $dsn . ';Connection Timeout=10;', $charset, $sessionMode);
+            $dsn = preg_replace('/DESCRIPTION = /', 'DESCRIPTION = (CONNECT_TIMEOUT=10)', $dsn);
+            \Log::info($dsn);
+            $this->dbh = @oci_connect($username, $password, $dsn, $charset, $sessionMode);
         }
 
         if (! $this->dbh) {
