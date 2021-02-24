@@ -68,7 +68,7 @@ class Oci8 extends PDO
     public function __construct($dsn, $username, $password, array $options = [])
     {
         $dsn = (string) trim($dsn);
-        \Log::info($dns)
+        \Log::info($dns);
         if (strpos($dsn, 'oci:') === 0) {
             $connectStr = preg_replace('/^oci:/', '', $dsn);
             parse_str(str_replace(';', '&', $connectStr), $connectParams);
